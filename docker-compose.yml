@@ -3,6 +3,8 @@ services:
     build:
       context: image
       target: cheat-sheet
+      cache_from:
+        - ghcr.io/${REPO_OWNER:-bacluc}/fund-data-science-cheat-sheet:${VERSION:-local}
     image: ghcr.io/${REPO_OWNER:-bacluc}/fund-data-science-cheat-sheet:${VERSION:-local}
     volumes:
       - ./tex:/workspace
