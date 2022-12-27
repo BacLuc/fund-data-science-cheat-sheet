@@ -1,0 +1,35 @@
+\section{Basics}
+\subsection{Derivation rules}
+\subsubsection{log(x)}
+\begin{equation}
+	\frac{\mathrm{d}}{\mathrm{d} x}\big( log(x) \big) = \frac{1}{x}
+\end{equation}
+\subsubsection{Chain rule}
+\begin{equation}
+	\frac{\mathrm{d}}{\mathrm{d} x}\big( f(g(x)) \big) = f'(g(x))*g'(x)
+\end{equation}
+Example:
+\begin{equation}
+	\frac{\mathrm{d}}{\mathrm{d} x}\big( log(1-\theta) \big) = \frac{1}{1-\theta}*-
+	1
+\end{equation}
+Multiplication rule:
+\begin{equation}
+	\frac{\mathrm{d}}{\mathrm{d} x}\big( f(x)g(x) \big) = f'(x)*g(x) + f(x)*g'(x)
+\end{equation}
+\subsection{Matrix operations}
+\subsubsection{Transpose rules}
+\begin{equation}
+	(AB)^{T}= B^{T}A^{T}
+\end{equation}
+Because $vector * Matrix * vector$ is a scalar
+\begin{equation}
+	w^{T}A^{T}y = y^{T}Aw
+\end{equation}
+\subsubsection{Matrix derivations}
+\begin{equation}
+	\begin{aligned}
+		\Delta_w(Aw) = A\\ \Delta_w(w^TAw) = 2Aw\\ \Delta_wAw = A^T\\ \Delta_w(w^Tw)
+		= 2w\\
+	\end{aligned}
+\end{equation}

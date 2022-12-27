@@ -1,0 +1,9 @@
+services:
+  cheat-sheet-tex:
+    build:
+      context: image
+      target: cheat-sheet
+    image: ghcr.io/${REPO_OWNER:-bacluc}/fund-data-science-cheat-sheet:${VERSION:-local}
+    volumes:
+      - ./tex:/workspace
+      - ./out:/out
