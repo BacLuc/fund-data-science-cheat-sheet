@@ -1,0 +1,52 @@
+\section{Probability}
+$P(A \cup B) = P(A) + P(B) - P(A \cap B)$\\ $P(A|B)=\frac{P(A \cap B)}{P(B)}$\\
+$P(A \cap B) = P(A|B)P(B) = P(B|A)P(A)$\\ $P(A|B)=\frac{P(B|A)P(A)}{P(B)}$
+\section{Naïve Bayes}
+\subsection{Distributions}
+\subsubsection{Bernoulli}
+$p(x|\theta)=\theta^{x}*(1-\theta)^{1-x}, x \epsilon \{0,1\}, \theta \epsilon (0,
+1)$
+\subsubsection{Multinoulli}
+$p(x=c_{1}|x_{c1},x_{c2}\dots x_{ck})=x_{c1}$ $p(D|x_{c1},x_{c2}\dots x_{ck})=\prod
+_{i=1}^{N}p(x=c_{1})$
+\subsubsection{Normal distribution or Gauss}
+$p(x|\mu, \sigma^{2})=\frac{1}{\sqrt{2\pi\sigma^{2}}}e^{-\frac{1}{2\sigma^{2}}(x-\mu)^2}$
+\subsection{Calculation
+of
+Naïve
+Bayes}
+$p(y=c_{i}|x_{new}, \theta)=\frac{\pi_{c_{i}}*\prod_{j=1}^{D}p(x_{j}|y=c_{i},\theta_{cj})}{\sum_{j=1}^{C}\left(P(y=c_{j}|\theta)*
+\prod_{k=1}^{D}p(x_{k}|y=c_{j},\theta_{kc})\right)}$\\ With class prior: $\pi_{c_{i}}
+= p(y=c_{i}| \theta) = \frac{N_{c_{i}}}{N}$\\ Joint distribution: $\prod_{j=1}^{D}
+p(x_{j}|y=c_{i},\theta_{cj})$\\ The denominator is the same for all classes, but
+can only be calculated after the nominator for all classes is calculated
+\subsection{Example}
+Given the table:
+\begin{tabular}{| c | c | c | c |}
+	\hline
+	x1 (Bin) & x2 (Class) & x3 ( $\mathcal{N}$ ) & Label \\
+	\hline
+	0        & a          & 3                    & x     \\
+	\hline
+	0        & b          & 5                    & y     \\
+	\hline
+	1        & c          & 4                    & z     \\
+	\hline
+\end{tabular}\\ And you want to know $p(y|x_{1}=0, x_{2}=a, x_{3}=4, \theta)$\\
+First calculate the class priors:\\ $\pi_{x}= \pi_{y}= \pi_{z}= \frac{1}{3}$\\ Then
+$\theta$\\
+\begin{tabular}{| c | c | c | c |}
+	\hline
+	   & x                   & y                   & z                   \\
+	\hline
+	x1 & $\theta_{0}=.9$     & $\theta_{0}=.9$     & $\theta_{0}=.1$     \\
+	\hline
+	x2 & a=0.8,b=c=.1        & b=.8,a=c=.1         & c=.9,a=b=.1         \\
+	\hline
+	x3 & $\mathcal{N}(3,.1)$ & $\mathcal{N}(5,.1)$ & $\mathcal{N}(4,.1)$ \\
+	\hline
+\end{tabular}\\ (You need to do smoothing that the probabilities are not 0)\\
+Calculate the nominator for each class:\\
+$Nom(y=x)=\pi_{x}* (\theta_{x_{1}x}* \theta_{x_{2}x}* \theta_{x_{3}x})$\\ $Nom(y
+=x)=\pi_{x}* (0.9 * 0.8 * p(x=4|\mathcal{N}(3,0.1))$\\ When you have all
+nominators, add them up to get the denominator.
