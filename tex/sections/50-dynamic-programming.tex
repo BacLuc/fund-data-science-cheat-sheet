@@ -1,0 +1,39 @@
+\section{Encoding for equation solvers}
+\subsection{Linear encoding}
+\subsubsection{Optimize the objective function}
+$c_{1}x_{1}+ c_{2}x_{2}$\\ Within constraints:\\ $x_{1}+ x_{2}\leq b_{1}$\\
+$a_{21}x_{1}+ a_{22}x_{2}\leq b_{2}$\\ $a_{31}x_{1}+ a_{32}x_{2}\leq b_{3}$\\
+And additional constraints:\\ $x_{1}\geq 0$\\ $x_{2}\geq 0$\\
+\subsubsection{Is then formulated as}
+$c_{1}x_{1}+ c_{2}x_{2}= z$\\ Within constraints:\\ $x_{1}+ x_{2}+ s_{1}= B_{1}$\\
+$a_{11}x_{1}+ a_{12}x_{2}+ s_{2}= B_{2}$\\ $a_{11}x_{1}+ a_{22}x_{2}+ s_{3}= B_{3}$\\
+($s_{i}$ are slack variables)\\ And the additional constraints from above\\ Or
+in matrix notation:\\
+\begin{equation}
+	\begin{bmatrix*}
+		1 & -c_{1} & -c_{2} & 0 & 0 & 0 \\
+		0 & 1      & 1      & 1 & 0 & 0 \\
+		0 & a_{11} & a_{12} & 0 & 1 & 0 \\
+		0 & a_{21} & a_{22} & 0 & 0 & 1 \\
+	\end{bmatrix*}
+	\begin{bmatrix*}
+		z     \\
+		x_{1} \\
+		x_{2} \\
+		s_{1} \\
+		s_{2} \\
+		s_{3} \\
+	\end{bmatrix*}
+	=
+	\begin{bmatrix*}
+		0     \\
+		B_{1} \\
+		B_{2} \\
+		B_{3} \\
+	\end{bmatrix*}
+\end{equation}
+\subsection{Quadratic encoding}
+\subsubsection{Minimize}
+$x^{T}Qx + c^{T}x$
+\subsubsection{Subject to}
+$Ax \preceq b$\\ $\preceq$ means component wise smaller
