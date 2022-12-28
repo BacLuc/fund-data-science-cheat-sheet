@@ -1,0 +1,28 @@
+\section{Regularization}
+\small Needed to avoid overfitting.\\ \textbf{Bias:} Difference between the
+prediction and the true value. High bias means the model maybe under-fits.\\ \textbf{Variance:}
+Model changes too much for small changes in the data set. Related to overfitting.\\
+\subsection{Ridge regression}
+Also called $l_{2}$ regularization\\ Penalising weights, \enquote{encourages fitting signal rather than just noise}\\
+$L_{ridge}(w) = (Xw - y)^{T}(Xw - y) + \lambda \sum_{n=1}^{D}w_{i}^{2}$\\ $L_{ridge}
+(w) = w^{T}X^{T}Xw - 2y^{T}Xw + y^{T}y + \lambda w^{T}w$\\
+\subsubsection{Gradient}
+$\nabla_{w}L_{ridge}(w) = 2X^{T}Xw - 2X^{T}y + 2 \lambda w$\\ $w_{ridge}= (X^{T}X
++ \lambda I_{D})^{-1}X^{T}y$\\
+\subsection{Lasso}
+Also called $l_{1}$ regularization
+$L_{lasso}(w) = (Xw - y)^{T}(Xw - y) + \lambda \sum_{n=1}^{D}|w_{i}|$\\
+\subsubsection{Trick get the derivative of Lasso:}
+\small Define function $sign(w_{i})$, such that:\\
+\[
+	sign(w_{i}) = \{
+	\begin{array}{lr}
+		1,  & w_{1} > 0 \\
+		0,  & w_{1} = 0 \\
+		-1, & w_{1} < 0 \\
+	\end{array}
+\]\\ Then you have a possible subgradient with:\\ $g(w)=\sum_{i=1}^{N}\nabla_{w}(
+w^{T}x_{i}- y_{i})^{2}+ \lambda sign(w)$
+\subsection{Comparison Ridge vs Lasso}
+Lasso forces many parameters to become 0, Ridge does not do that. Lasso normally
+has no closed form solution, Ridge can.

@@ -1,0 +1,13 @@
+\section{Optimization methods}
+\subsection{Gradient descent}
+$w_{t+1}= w_{t}+ \eta_{t}*\nabla f(w_{t})$\\ $\eta$ can either be\\
+\begin{itemize}
+	\item a constant $\eta_{t}= c$
+
+	\item Decaying: $\eta_{t}= \frac{c}{t}$, common is: $\frac{1}{\sqrt{t}}$
+
+	\item Backtracking line search:\\ reduce step size if value does not decrease
+\end{itemize}
+\subsection{Newtons method}
+$w_{t+1}= w_{t}+ \eta_{t}*\frac{f'(w_{t})}{f''(w_{t})}$\\ $w_{t+1}= w_{t}+ \eta_{t}
+*H(f(w_{t}))^{-1}\nabla f(w_{t})$\\
