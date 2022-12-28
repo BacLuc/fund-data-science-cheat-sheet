@@ -15,7 +15,18 @@ jobs:
     outputs:
       image-tags: ${{ steps.image-tags.outputs.tags }}
       latest-commit: ${{ steps.latest-commit.outputs.latest-commit }}
+      repo-owner-lowercase: ${{ steps.repo-owner.outputs.result }}
     steps:
+
+      #github allows forces lower case for the image name
+      - name: Get lowercase repo owner name
+        uses: actions/github-script@v6
+        id: repo-owner
+        with:
+          result-encoding: string
+          script: |
+            return context.repo.owner.toLowerCase()
+
       - uses: actions/checkout@93ea575cb5d8a053eaa0ac8fa3b40d7e05a33cc8 # tag=v3
         with:
           fetch-depth: 100
@@ -91,33 +102,40 @@ jobs:
       - name: check if tag exists
         id: tag-exists
         env:
-          latest-commit: ${{ steps.latest-commit.outputs.latest-commit }}
+          VERSION: ${{ steps.latest-commit.outputs.latest-commit }}
+          REPO_OWNER: ${{ steps.repo-owner.outputs.result }}
         run: |
           set +e
-          VERSION=${{ env.latest-commit }} docker-compose pull
+          docker-compose pull
           tag_exists=$(if [ $? -eq 0 ]; then echo "true"; else echo "false"; fi)
           echo "tag-exists=$tag_exists" | tr -d "\n"  >> $GITHUB_OUTPUT
 
       - name: Build and push nightly
         if: ${{ steps.add-nightly-tag.outputs.nightly-tag }}
+        env:
+          VERSION: ${{ steps.add-nightly-tag.outputs.nightly-tag }}
+          REPO_OWNER: ${{ steps.repo-owner.outputs.result }}
         run: |
-          tag=${{ steps.add-nightly-tag.outputs.nightly-tag }}
-          VERSION=$tag docker-compose build
-          VERSION=$tag docker-compose push
+          docker-compose build
+          docker-compose push
 
       - name: Build and push tag
         if: ${{ steps.get-tag.outputs.result }}
+        env:
+          VERSION: ${{ steps.get-tag.outputs.result }}
+          REPO_OWNER: ${{ steps.repo-owner.outputs.result }}
         run: |
-          tag=${{ steps.get-tag.outputs.result }}
-          VERSION=$tag docker-compose build
-          VERSION=$tag docker-compose push
+          docker-compose build
+          docker-compose push
 
       - name: Build and push latest
         if: ${{ steps.add-latest-tag.outputs.latest-tag }}
+        env:
+          VERSION: ${{ steps.add-latest-tag.outputs.latest-tag }}
+          REPO_OWNER: ${{ steps.repo-owner.outputs.result }}
         run: |
-          tag=${{ steps.add-latest-tag.outputs.latest-tag }}
-          VERSION=$tag docker-compose build
-          VERSION=$tag docker-compose push
+          docker-compose build
+          docker-compose push
 
       - name: checkout latest commit
         env:
@@ -127,10 +145,12 @@ jobs:
 
       - name: Build and push latest commit for image
         if: ${{ steps.tag-exists.outputs.tag-exists == 'false' }}
+        env:
+          VERSION: ${{ steps.latest-commit.outputs.latest-commit }}
+          REPO_OWNER: ${{ steps.repo-owner.outputs.result }}
         run: |
-          tag=${{ steps.latest-commit.outputs.latest-commit }}
-          VERSION=$tag docker-compose build
-          VERSION=$tag docker-compose push
+          docker-compose build
+          docker-compose push
 
   check-format:
     runs-on: ubuntu-latest
@@ -152,13 +172,15 @@ jobs:
 
       - name: pull image
         env:
-          latest-commit: ${{ needs.build-image.outputs.latest-commit }}
-        run: VERSION=${{ env.latest-commit }} docker-compose pull
+          VERSION: ${{ needs.build-image.outputs.latest-commit }}
+          REPO_OWNER: ${{ needs.build-image.outputs.repo-owner-lowercase }}
+        run: docker-compose pull
 
       - name: check-format
         env:
-          latest-commit: ${{ needs.build-image.outputs.latest-commit }}
-        run: VERSION=${{ env.latest-commit }} docker-compose run --rm cheat-sheet-tex check-format
+          VERSION: ${{ needs.build-image.outputs.latest-commit }}
+          REPO_OWNER: ${{ needs.build-image.outputs.repo-owner-lowercase }}
+        run: docker-compose run --rm cheat-sheet-tex check-format
 
   build-pdf:
     runs-on: ubuntu-latest
@@ -180,16 +202,18 @@ jobs:
 
       - name: pull image
         env:
-          latest-commit: ${{ needs.build-image.outputs.latest-commit }}
-        run: VERSION=${{ env.latest-commit }} docker-compose pull
+          VERSION: ${{ needs.build-image.outputs.latest-commit }}
+          REPO_OWNER: ${{ needs.build-image.outputs.repo-owner-lowercase }}
+        run: docker-compose pull
 
       - name: allow 1000 to write to out
         run: chmod -R +w out
 
       - name: generate pdf
         env:
-          latest-commit: ${{ needs.build-image.outputs.latest-commit }}
-        run: VERSION=${{ env.latest-commit }} docker-compose run -u 1001 --rm cheat-sheet-tex
+          VERSION: ${{ needs.build-image.outputs.latest-commit }}
+          REPO_OWNER: ${{ needs.build-image.outputs.repo-owner-lowercase }}
+        run: docker-compose run -u 1001 --rm cheat-sheet-tex
 
       - name: add archive to build output
         uses: actions/upload-artifact@v2
