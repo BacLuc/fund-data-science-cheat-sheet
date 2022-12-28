@@ -3,6 +3,7 @@ name: CI
 on:
   push:
   pull_request:
+  pull_request_target:
   workflow_dispatch:
 
 env:
@@ -222,7 +223,7 @@ jobs:
 
       - name: Comment artifact url on PR
         uses: thollander/actions-comment-pull-request@v2
-        if: ${{ github.event_name == 'pull_request' }}
+        if: ${{ github.event_name == 'pull_request_target' }}
         with:
           pr_number: ${{ github.event.issue.number }}
           message: |
