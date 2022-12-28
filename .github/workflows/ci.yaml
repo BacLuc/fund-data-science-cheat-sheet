@@ -98,23 +98,39 @@ jobs:
           tag_exists=$(if [ $? -eq 0 ]; then echo "true"; else echo "false"; fi)
           echo "tag-exists=$tag_exists" | tr -d "\n"  >> $GITHUB_OUTPUT
 
+      - name: Build and push nightly
+        if: ${{ steps.add-nightly-tag.outputs.nightly-tag }}
+        run: |
+          tag=${{ steps.add-nightly-tag.outputs.nightly-tag }}
+          VERSION=$tag docker-compose build
+          VERSION=$tag docker-compose push
+
+      - name: Build and push tag
+        if: ${{ steps.get-tag.outputs.result }}
+        run: |
+          tag=${{ steps.get-tag.outputs.result }}
+          VERSION=$tag docker-compose build
+          VERSION=$tag docker-compose push
+
+      - name: Build and push latest
+        if: ${{ steps.add-latest-tag.outputs.latest-tag }}
+        run: |
+          tag=${{ steps.add-latest-tag.outputs.latest-tag }}
+          VERSION=$tag docker-compose build
+          VERSION=$tag docker-compose push
+
       - name: checkout latest commit
         env:
-          tags: ${{ steps.image-tags.outputs.image-tags}}
           latest-commit: ${{ steps.latest-commit.outputs.latest-commit }}
         run: |
           git checkout ${{ env.latest-commit }}
 
-      - name: Build and push tags
-        if: ${{ steps.tag-exists.outputs.tag-exists == 'false' || steps.get-tag.outputs.result || steps.add-nightly-tag.outputs.nightly-tag }}
-        env:
-          tags: ${{ steps.image-tags.outputs.image-tags}}
-          latest-commit: ${{ steps.latest-commit.outputs.latest-commit }}
+      - name: Build and push latest commit for image
+        if: ${{ steps.tag-exists.outputs.tag-exists == 'false' }}
         run: |
-          for tag in $(echo ${{ env.tags }} | jq -r '.[]'); do
-              VERSION=$tag docker-compose build
-              VERSION=$tag docker-compose push
-          done
+          tag=${{ steps.latest-commit.outputs.latest-commit }}
+          VERSION=$tag docker-compose build
+          VERSION=$tag docker-compose push
 
   check-format:
     runs-on: ubuntu-latest
