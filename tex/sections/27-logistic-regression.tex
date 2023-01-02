@@ -1,0 +1,11 @@
+\section{Logistic regression}
+Sigmoid function:\\ $\sigma(t)=\frac{1}{1+e^{-t}}$\\ $\nabla\sigma(t)=\sigma(t)(1
+-\sigma(t))$\\ Prediction:\\
+$p(y_{new}=1|x_{new}, w)=\sigma(wx_{new})=\frac{1}{1+e^{-x_{new}w}}$\\ $\hat{y_{new}}
+=I(\sigma(wx_{new}) \geq \frac{1}{2})=I(wx_{new}\geq0)$\\
+$p(y|X,w)=\prod_{1}^{N}\sigma(w^{T}x_{i})^{y_i}*(1-\sigma(w^{T}x_{i}))^{1-y_i}$\\
+We write $\mu_{i}= \sigma(w^{T}x_{i})$\\
+$p(y|X,w)=\prod_{1}^{N}\mu_{i}^{y_i}*(1-\mu_{i})^{1-y_i}$\\ $NLL = -\sum_{i=1}^{N}
+(y_{i}log(\mu_{i})+(1-y_{i})log(1-\mu_{i}))$\\
+$\nabla_{w}NLL = -\sum_{i=1}^{N}x_{i}(\mu_{i}- y_{i}) = X^{T}(\mu - y)$\\ $H=X^{T}
+SX$ where $S_{ii}= \mu_{i}(1-\mu_{i})$
