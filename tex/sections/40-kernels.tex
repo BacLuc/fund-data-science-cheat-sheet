@@ -9,3 +9,45 @@ $\kappa(x', x) = exp(\kappa(x', x))$\\ $\kappa(x', x) =\kappa_{1}(x', x)\kappa_{
 $\kappa(x', x) =\kappa_{1}(x_{a}', x_{a})\kappa_{2}(x_{b}', x_{b}), x = (x_{a}, x
 _{b})$\\ $\kappa(x', x) =\kappa_{1}(x_{a}', x_{a})+\kappa_{2}(x_{b}', x_{b}), x =
 (x_{a}, x_{b})$\\ $\kappa(x', x) =x^{T}Ax$, if A is symmetric positive semi definite\\
+Proof that a function is not a kernel:\\ Find values that the gram matrix has
+lower values on the diagonal as else.\\ e.g. $f(x_{1}, x_{2})=(1-x_{1}^{T}x_{2})$\\
+Use the 2 1 dimensional datapoints $x_{1}=1$ and $x_{2}=-1$\\
+\[
+	grammatrix = \left[
+	\begin{matrix}
+		k(x_{1},x_{1}) & k(x_{1},x_{2}) \\
+		k(x_{2},x_{1}) & k(x_{2},x_{2}) \\
+	\end{matrix}\right] = \left[
+	\begin{matrix}
+		0 & 4 \\
+		4 & 0 \\
+	\end{matrix}\right]
+\]\\ Now show that $z^{T}Az < 0$
+\[
+	\left[
+	\begin{matrix}
+		1 & -1 \\
+	\end{matrix}\right] \left[
+	\begin{matrix}
+		0 & 4 \\
+		4 & 0 \\
+	\end{matrix}\right] \left[
+	\begin{matrix}
+		1  \\
+		-1 \\
+	\end{matrix}\right] = -8
+\]\\ Find a kernel map to separate two \enquote{circles}\\
+\[
+	\phi \left[
+	\begin{matrix}
+		x_{1} \\
+		x_{2} \\
+	\end{matrix}\right]=\left[
+	\begin{matrix}
+		x_{1}                \\
+		x_{2}                \\
+		x_{1}^{2}+ x_{2}^{2} \\
+	\end{matrix}\right]
+\]
+$k(x, x') = \phi(x) * \phi(x') = x_{1}*x_{1}' + x_{2}* x_{2}' + (x_{1}^{2}+ x_{2}
+^{2}) * (x_{1}'^{2}+ x_{2}'^{2})$
