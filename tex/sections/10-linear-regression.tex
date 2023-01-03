@@ -1,3 +1,6 @@
 \section{Linear regression}
 \subsubsection{Basics}
-$w = (X^{T}X)^{-1}X^{T}y$\\ $\hat{y}=Xw$
+$w = (X^{T}X)^{-1}X^{T}y$\\ $\hat{y}=Xw$\\ Centered ridge regression:\\
+$\mathcal{L}(w,b)=(Xw + b1 - y)^{T}(Xw +b1 - y) + \lambda w^{T}w$\\ and:
+$\frac{1}{N}\sum_{i=1}^{N}x_{i}= 0$\\ then: $(b1)^{T}(b1) = Nb^{2}$\\ and:
+$2y^{T}(b1)=2\sum_{i=1}^{N}y_{i}$\\ If y is centered, then b is 0\\
