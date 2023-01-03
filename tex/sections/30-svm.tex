@@ -1,4 +1,12 @@
 \section{Support vector machines}
+\subsection{Way 1: 2 dimensional geometry}
+$y=ax+b$, orthogonal line: $y=-1/ax+c$\\ Slope:$\frac{y_{2}-
+y_{1}}{x_{2}-
+x_{1}}$
+\subsection{Way 2: 3 dimensional hyperplane}
+For support vectors: $(+1/-1) = w_{0}+ w_{1}x_{1}+ w_{2}x_{2}$\\ $margin = \frac{1}{||w_{opt}||}$,
+$w_{opt}$ is w without bias\\ You might need to change the sign of w to get the correct
+w\\
 \subsubsection{Relations}
 The weight vector w is orthogonal to the decision boundary.\\ The margin is
 $\frac{1}{||w||_{2}}$\\
