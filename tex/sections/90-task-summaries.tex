@@ -1,0 +1,13 @@
+\section{Centering and Ridge regression}
+$\mathcal{L}(w,b)=(Xw +b1-y)^{T}(Xw +b1-y)+\lambda w^{T}w$\\ $=w^{T}X^{T}Xw+w^{T}
+X^{T}b1-w^{T}X^{T}y +[(b1)^{T}Xw]+[(b1)^{T}(b1)]-[(b1)^{T}y]-y^{T}Xw-y^{T}b1+y^{T}
+y+\lambda w^{T}w$\\ Because $X^{T}c1=(d1)^{T}X=0$ when
+$\frac{1}{N}\sum_{i=1}^{N}x_{i}= 0$ then $w^{T}X^{T}b1=w^{T}*0=0$\\ Also:
+$(b1)^{T}(b1) = Nb^{2}$, so after resolving terms:\\ $=w^{T}X^{T}Xw-y^{T}Xw +Nb^{2}
+-y^{T}b1-y^{T}Xw-y^{T}b1 +y^{T}y +\lambda w^{T}w$\\
+$=w^{T}X^{T}Xw-2y^{T}Xw +Nb^{2}-2y^{T}b1+y^{T}y +\lambda w^{T}w$\\ $\nabla{w}\mathcal{L}
+_{ridge}=2X^{T}Xw-2X^{T}y+2\lambda w$\\ Because
+$\nabla_{b}(2y^{T}(b1))=2\sum_{i=1}^{N}y_{i}$\\ $\nabla{b}\mathcal{L}_{ridge}=2N
+b-2\sum_{i=1}^{N}y_{i}$\\ Set $\nabla{w}\mathcal{L}_{ridge}$ to 0:\\ Take
+$X^{T}y$ to the other side and extract w:\\
+$w=(X^{T}X+\lambda I_{D})^{-1}X^{T}y$\\
