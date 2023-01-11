@@ -11,5 +11,13 @@ $\nabla_{b}(2y^{T}(b1))=2\sum_{i=1}^{N}y_{i}$\\ $\nabla{b}\mathcal{L}_{ridge}=2N
 b-2\sum_{i=1}^{N}y_{i}$\\ Set $\nabla{w}\mathcal{L}_{ridge}$ to 0:\\ Take
 $X^{T}y$ to the other side and extract w:\\
 $w=(X^{T}X+\lambda I_{D})^{-1}X^{T}y$\\
+\section{Newtons method for ridge regression}
+$\nabla{w}\mathcal{L}_{ridge}=2X^{T}Xw-2X^{T}y+2\lambda w$\\
+$H_{ridge}=\nabla_{w}(\nabla{w}\mathcal{L}_{ridge})=2(X^{T}X+\lambda I_{D})$\\ Newtons
+method:\\ $w_{t+1}=w_{t}-\eta H^{-1}\nabla f(w_{t})$\\
+$=w_{t}-2^{-1}(X^{T}X+\lambda I_{D})^{-1}2((X^{T}X+\lambda I_{D})w_{t}-X^{T}y)$\\
+$=w_{t}-(X^{T}X+\lambda I_{D})^{-1}((X^{T}X+\lambda I_{D})w_{t}-X^{T}y)$\\
+Because $(X^{T}X+\lambda I_{D})^{-1}*(X^{T}X+\lambda I_{D})=1$\\ $=w_{t}-(w_{t}-(
+X^{T}X+\lambda I_{D})^{-1}X^{T}y)$
 \section{Requirements on N for linear regression}
 The rank of X is D\\ The rank of $X^{T}$ is D\\ $D \leq N$\\
