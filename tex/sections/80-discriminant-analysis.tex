@@ -3,7 +3,7 @@ Takes the covariance into account.
 \subsection{Gaussian (quadratic) discriminant analysis}
 $p(y=c|x,\sigma)=$\\
 \[
-	\frac{\frac{N_c}{N}\frac{1}{\sqrt{|2\pi\Sigma_{c}|}}exp(-\frac{1}{2}(X-\mu_{c})^{T}\Sigma_{c}^{-1}(X-\mu_{c}))}{\sum_{c'=1}^{C}\frac{N_{c'}}{N}\frac{1}{\sqrt{|2\pi\Sigma_{c'}|}}exp(-\frac{1}{2}(X-\mu_{c'})^{T}\Sigma_{c'}^{-1}(X-\mu_{c'}))}
+	\frac{\frac{N_c}{N}\frac{1}{\sqrt{|2\pi\Sigma_{c}|}}e^{(-\frac{1}{2}(X-\mu_{c})^{T}\Sigma_{c}^{-1}(X-\mu_{c}))}}{\sum_{c'=1}^{C}\frac{N_{c'}}{N}\frac{1}{\sqrt{|2\pi\Sigma_{c'}|}}e^{(-\frac{1}{2}(X-\mu_{c'})^{T}\Sigma_{c'}^{-1}(X-\mu_{c'}))}}
 \]\\ $\hat{\mu}_{c}=\frac{1}{N_{c}}\sum_{i:y_i=c}x_{i}$\\
 $\hat{\Sigma}_{c}=\frac{1}{N_{c}}\sum_{i:y_i=c}(x_{i}- \hat{\mu}_{c})^{T}(x_{i}-
 \hat{\mu}_{c})$\\
